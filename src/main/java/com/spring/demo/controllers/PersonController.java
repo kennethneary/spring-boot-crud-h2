@@ -1,5 +1,6 @@
 package com.spring.demo.controllers;
 
+import com.spring.demo.aop.TrackTime;
 import com.spring.demo.models.Person;
 import com.spring.demo.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,22 +15,23 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping("/persons")
-    private List<Person> getAllPersons() {
+    public List<Person> getAllPersons() {
         return personService.getAllPersons();
     }
 
     @GetMapping("/persons/{id}")
-    private Person getPerson(@PathVariable("id") int id) {
+    public Person getPerson(@PathVariable("id") int id) {
         return personService.getPersonById(id);
     }
 
     @DeleteMapping("/persons/{id}")
-    private void deletePerson(@PathVariable("id") int id) {
+    public void deletePerson(@PathVariable("id") int id) {
         personService.delete(id);
     }
 
     @PostMapping("/persons")
-    private int savePerson(@RequestBody Person person) {
+    @TrackTime
+    public int savePerson(@RequestBody Person person) {
         personService.saveOrUpdate(person);
         return person.getId();
     }
