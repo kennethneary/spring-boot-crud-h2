@@ -21,7 +21,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     public Person getPersonById(int id) {
-        return personRepository.findById(id).get();
+        return personRepository.findById(id).orElse(null);
     }
 
     public void saveOrUpdate(Person person) {
